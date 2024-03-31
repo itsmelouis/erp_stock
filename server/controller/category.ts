@@ -6,7 +6,7 @@ export const create = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
     const result = await categoryModel.create({
-      name: body.name
+      nom_Categorie: body.nom_Categorie
     });
 
     return {
@@ -54,7 +54,7 @@ export const update = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
     const result = await categoryModel.update(evt.context.params?.id as string, {
-      name: body.name
+      nom_Categorie: body.nom_Categorie
     });
 
     return {

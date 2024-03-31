@@ -1,15 +1,14 @@
 import { sql } from '~~/server/db';
 
 export type StockModel = {
-  id: string;
-  amount: number;
-  dateEntry: Date;
-  dateExit: Date | null;
+  id_Stock: string;
+  quantite_dispo_Stock: number;
+  date_entree_Stock: Date;
+  date_sortie_Stock: Date | null;
 };
-
 export type TotalStockModel = {
-  id: string;
-  amount: number;
+  id_Stock_total: string;
+  total_Stock_total: number;
 };
 
 
@@ -31,16 +30,16 @@ export const readAllProductStock = async () => {
 
 export const readTotalStock = async () => {
   const result = await sql({
-    query: 'SELECT st.total FROM stock_total st'
+    query: 'SELECT * FROM stock_total st'
   });
 
   return result as TotalStockModel[];
 }
 
-export const update = async (id: string, data: Pick<StockModel, "amount">) => {
+export const update = async (id: string, data: Pick<StockModel, "quantite_dispo_Stock">) => {
   await sql({
     query: `CALL updateProduitStock(?, ?)`,
-    values: [id, data.amount]
+    values: [id, data.quantite_dispo_Stock]
   });
 
   return await read(id);

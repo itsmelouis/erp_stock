@@ -51,7 +51,7 @@ export const update = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
     const result = await stockModel.update(evt.context.params?.id as string, {
-      amount: body.amount
+      quantite_dispo_Stock: body.amount
     });
 
     return {

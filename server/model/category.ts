@@ -1,14 +1,14 @@
 import { sql } from '~~/server/db';
 
 export type CategoryModel = {
-  id: string;
-  name: string;
+  id_Categorie: string;
+  nom_Categorie: string;
 };
 
-export const create = async (data: Omit<CategoryModel, "id">) => {
+export const create = async (data: Omit<CategoryModel, "id_Categorie">) => {
   const result = await sql({
     query: 'CALL createCategorie(?)',
-    values: [data.name]
+    values: [data.nom_Categorie]
   }) as any;
 
   return result as CategoryModel[];
@@ -30,10 +30,10 @@ export const readAll = async () => {
   return result as CategoryModel[];
 };
 
-export const update = async (id: string, data: Omit<CategoryModel, "id">) => {
+export const update = async (id: string, data: Omit<CategoryModel, "id_Categorie">) => {
   await sql({
     query: `CALL updateCategorie(?, ?)`,
-    values: [id, data.name]
+    values: [id, data.nom_Categorie]
   });
 
   return await read(id);

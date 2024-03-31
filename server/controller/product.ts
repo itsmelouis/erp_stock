@@ -6,11 +6,11 @@ export const create = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
     const result = await productModel.create({
-      name: body.name,
-      description: body.description,
-      unitPrice: body.unitPrice,
-      idCategory: body.idCategory,
-      idStock: body.idStock
+      nom_Produit: body.nom_Produit,
+      description_Produit: body.description_Produit,
+      prix_unitaire_Produit: body.prix_unitaire_Produit,
+      id_Categorie: body.id_Categorie,
+      quantite_dispo_Stock: body.quantite_dispo_Stock
     });
 
     return {
@@ -58,9 +58,9 @@ export const update = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
     const result = await productModel.update(evt.context.params?.id as string, {
-      name: body.name,
-      description: body.description,
-      unitPrice: body.unitPrice
+      nom_Produit: body.nom_Produit,
+      description_Produit: body.description_Produit,
+      prix_unitaire_Produit: body.prix_unitaire_Produit
     });
 
     return {
