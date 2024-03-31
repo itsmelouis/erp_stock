@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 27 mars 2024 à 23:35
+-- Généré le : dim. 31 mars 2024 à 14:15
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `erp_stock`
+-- Base de données : `erp_stock2`
 --
 
 DELIMITER $$
@@ -76,6 +76,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getProduitStock` (IN `produitID` BI
     SELECT p.nom_Produit, s.* FROM Stock s
     JOIN Produit p ON p.id_Stock = s.id_Stock
     WHERE p.id_Produit = produitID;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTotalStock` ()   BEGIN
+    SELECT id_Stock_total, total_Stock_total FROM `stock_total` WHERE 1;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateCategorie` (IN `categorieID` BIGINT, IN `newNomCategorie` VARCHAR(255))   BEGIN
@@ -145,7 +149,8 @@ INSERT INTO `produit` (`id_Produit`, `nom_Produit`, `description_Produit`, `prix
 (48, 'Carte graphique RTX 3080', 'Pour le gaming et le travail créatif', '800', 4, 7),
 (49, 'Écran Dell UltraSharp', 'Écran 4K pour professionnels', '450', 2, 8),
 (50, 'Licence Windows 10 Pro', 'Système d’exploitation complet', '200', 3, 9),
-(51, 'NAS Synology DS220+', 'Solution de stockage réseau', '300', 5, 10);
+(51, 'NAS Synology DS220+', 'Solution de stockage réseau', '300', 5, 10),
+(52, 'ordinateur', 'la desc', '1000', 1, 17);
 
 -- --------------------------------------------------------
 
@@ -169,12 +174,13 @@ INSERT INTO `stock` (`id_Stock`, `quantite_dispo_Stock`, `date_entree_Stock`, `d
 (2, 15, '2024-03-27 23:32:11', NULL),
 (3, 20, '2024-03-27 23:32:11', NULL),
 (4, 5, '2024-03-27 23:32:11', NULL),
-(5, 8, '2024-03-27 23:32:11', NULL),
-(6, 12, '2024-03-27 23:32:11', NULL),
-(7, 30, '2024-03-27 23:32:11', NULL),
+(5, 800, '2024-03-27 23:32:11', NULL),
+(6, 120, '2024-03-27 23:32:11', NULL),
+(7, 300, '2024-03-27 23:32:11', NULL),
 (8, 25, '2024-03-27 23:32:11', NULL),
 (9, 18, '2024-03-27 23:32:11', NULL),
-(10, 22, '2024-03-27 23:32:11', NULL);
+(10, 22, '2024-03-27 23:32:11', NULL),
+(17, 50000, '2024-03-31 14:15:18', NULL);
 
 --
 -- Déclencheurs `stock`
@@ -183,7 +189,7 @@ DELIMITER $$
 CREATE TRIGGER `after_stock_delete` AFTER DELETE ON `stock` FOR EACH ROW BEGIN
     UPDATE Stock_total
     SET total_Stock_total = total_Stock_total - OLD.quantite_dispo_Stock
-    WHERE id_Stock_total = 1; -- Même hypothèse que ci-dessus
+    WHERE id_Stock_total = 6;
 END
 $$
 DELIMITER ;
@@ -191,17 +197,17 @@ DELIMITER $$
 CREATE TRIGGER `after_stock_insert` AFTER INSERT ON `stock` FOR EACH ROW BEGIN
     UPDATE Stock_total
     SET total_Stock_total = total_Stock_total + NEW.quantite_dispo_Stock
-    WHERE id_Stock_total = 1; -- Supposons que Stock_total a un seul enregistrement avec id_Stock_total = 1
+    WHERE id_Stock_total = 6;
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `after_stock_update` AFTER UPDATE ON `stock` FOR EACH ROW BEGIN
-    DECLARE diff BIGINT;
-    SET diff = NEW.quantite_dispo_Stock - OLD.quantite_dispo_Stock;
-    UPDATE Stock_total
-    SET total_Stock_total = total_Stock_total + diff
-    WHERE id_Stock_total = 1; -- Même hypothèse que ci-dessus
+    IF NEW.quantite_dispo_Stock <> OLD.quantite_dispo_Stock THEN
+        UPDATE Stock_total
+        SET total_Stock_total = total_Stock_total + (NEW.quantite_dispo_Stock)
+        WHERE id_Stock_total = 6;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -222,7 +228,7 @@ CREATE TABLE `stock_total` (
 --
 
 INSERT INTO `stock_total` (`id_Stock_total`, `total_Stock_total`) VALUES
-(6, 155);
+(6, 51035);
 
 --
 -- Index pour les tables déchargées
@@ -268,13 +274,13 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
-  MODIFY `id_Produit` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_Produit` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT pour la table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id_Stock` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_Stock` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `stock_total`
