@@ -29,11 +29,10 @@ export const readAllProductStock = async () => {
 };
 
 export const readTotalStock = async () => {
-  const result = await sql({
-    query: 'SELECT * FROM stock_total st'
-  });
-
-  return result as TotalStockModel[];
+  const [result,] = (await sql({
+    query: 'CALL getTotalStock()'
+  })) as any;
+  return result.length === 1 ? (result[0] as TotalStockModel) : null;
 }
 
 export const update = async (id: string, data: Pick<StockModel, "quantite_dispo_Stock">) => {
