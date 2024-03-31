@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { CategoryModel } from '~/server/model/category';
 useHead({
-  title: 'Update Page'
+  title: 'Catégorie |ERP Stock'
 });
 
 

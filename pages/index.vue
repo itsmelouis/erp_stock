@@ -260,6 +260,10 @@ import type { ProductModel } from '~/server/model/product';
 import type { TotalStockModel } from '~/server/model/stock';
 import type { CategoryModel } from '~/server/model/category';
 
+useHead({
+  title: 'Dashboard | ERP Stock'
+});
+
 const products = ref<ProductModel[]>([]);
 const totalStock = ref<TotalStockModel>();
 const categories = ref<CategoryModel[]>([]);
@@ -290,7 +294,7 @@ async function fetchData() {
     const total = await $fetch('/api/stock/total');
     const categorie = await $fetch('/api/category');
     categories.value = categorie.data[0] as CategoryModel[];
-    totalStock.value = total.data[0] as TotalStockModel;
+    totalStock.value = total.data as TotalStockModel;
     products.value = result.data[0] as ProductModel[];
   } catch (error) {
     alert('Fetch erreur (regardez console)');

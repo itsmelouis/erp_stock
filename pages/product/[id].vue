@@ -57,7 +57,7 @@
 import type { ProductModel } from '~/server/model/product';
 import type { CategoryModel } from '~/server/model/category';
 useHead({
-  title: 'Update Page'
+  title: 'Produit | ERP Stock'
 });
 
 const categories = ref<CategoryModel[]>([]);
