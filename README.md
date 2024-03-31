@@ -1,10 +1,21 @@
-# Nuxt 3 Minimal Starter
+# Projet d'école "Développement SQL" par Louis et Théo
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Ce projet a été réalisé par Louis et Théo dans le cadre du module "Développement SQL".
 
-## Setup
+## Technologies utilisées
+- Base de données en MySQL
+- Nuxt 3 pour le front-end
+- Tailwind CSS pour le design
+- Nitro et H3 pour l'api
 
-Make sure to install the dependencies:
+## Architecture du Répertoire
+
+- [Fichier erp_stock.sql](erp_stock.sql) : Fichier de sauvegarde de la base de données.
+- [Dossier Projet](projet) : Contient le Modèle Conceptuel de Données (MCD), le Modèle Logique de Données (MLD), le Modèle Physique de Données (MPD), le dictionnaire de données, ainsi que le résumé en PDF de ces derniers.
+
+## Configuration
+
+Assurez-vous d'installer les dépendances :
 
 ```bash
 # npm
@@ -20,9 +31,9 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Serveur de Développement
 
-Start the development server on `http://localhost:3000`:
+Démarrez le serveur de développement sur `http://localhost:3000` :
 
 ```bash
 # npm
@@ -38,38 +49,5 @@ yarn dev
 bun run dev
 ```
 
-## Production
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Et le tour est joué ! 🚀
